@@ -26,6 +26,7 @@ def login(chromeDriver):
     chromeDriver.find_element_by_id('continue').click()
     chromeDriver.find_element_by_id('ap_password').send_keys(LOGIN_PASSWORD)
     chromeDriver.find_element_by_id('signInSubmit').click()
+    l.info("Successfully logged in")
 
 def purchase_item(chromeDriver):
     chromeDriver.get(ITEM_URL)
@@ -44,10 +45,10 @@ def purchase_item(chromeDriver):
     l.info("Clicking buy now")
     chromeDriver.find_element_by_id('buy-now-button').click()  # 1 click buy
     l.info("Placing order")
-    chromeDriver.find_element_by_id('submitOrderButtonId-announce').click()
-    #chromeDriver.find_element_by_id('placeYourOrder1').click()
-    return True
-
+    ###chromeDriver.find_element_by_id('submitOrderButtonId-announce').click()
+    chromeDriver.find_element_by_name('placeYourOrder1').click()
+    l.info("Successfully purchased item")
+    os._exit(0)
 
 def in_stock_check(chromeDriver):
     inStock = False
@@ -66,14 +67,12 @@ def in_stock_check(chromeDriver):
                 time.sleep(1)
                 chromeDriver.refresh()
     finally:
-        l.info("Item is in-stock!")
         return inStock
 
 def seller_check(chromeDriver):
     element = chromeDriver.find_element_by_id('tabular-buybox-truncate-1').text
-    l.info('element is: {}'.format(element))
+    l.info('Seller: {}'.format(element))
     shop = element.find(ACCEPT_SHOP)
-    l.info('shop is: {}'.format(shop))
     if shop == -1:
         raise Exception("Amazon is not the seller")
         return False
@@ -84,11 +83,9 @@ def verify_price_within_limit(chromeDriver):
     price = chromeDriver.find_element_by_id('priceblock_ourprice').text
     price = price.replace('$', '')
     price = float(price)
-    # price = price.join()
     l.info('price of item is:  {}'.format(price))
     l.info('limit value is: {}'.format(float(LIMIT_VALUE)))
     # int_price = int(price.replace(' ', '').replace(',', '').replace('$', ''))
-    # print(int_price)
     if price > float(LIMIT_VALUE):
         l.warn('PRICE IS TOO LARGE.')
         return False
