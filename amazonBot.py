@@ -1,8 +1,13 @@
 import os
 import time
-
+from os.path import join, dirname
 from logger import logger as l
 from selenium.common.exceptions import *
+from dotenv import load_dotenv
+
+load_dotenv(verbose=True)
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 
 LOGIN_MAIL = os.environ.get('LOGIN_MAIL', None)
 LOGIN_PASSWORD = os.environ.get('LOGIN_PASSWORD', None)
@@ -10,7 +15,7 @@ LOGIN_PASSWORD = os.environ.get('LOGIN_PASSWORD', None)
 ITEM_URL = os.environ.get('ITEM_URL', None)
 
 ACCEPT_SHOP = 'Amazon.com'
-LIMIT_VALUE = 500    # Maximum USD for the purchase
+LIMIT_VALUE = 550    # Maximum USD for the purchase
 
 
 
@@ -24,7 +29,7 @@ def login(chromeDriver):
 def purchase_item(chromeDriver):
     chromeDriver.get(ITEM_URL)
     # Checks if out of stock, verify_stock returns False if not in stock
-    if not in_stock_check(chromeDriver):
+    if in_stock_check(chromeDriver): # removed not, as this was evaluating as true when item was not in stock
         return False
     # Checks price
     if not verify_price_within_limit(chromeDriver):
@@ -39,7 +44,7 @@ def purchase_item(chromeDriver):
 def in_stock_check(chromeDriver):
     inStock = False
     try:
-        shop = chromeDriver.find_element_by_id('tabular-buybox-truncate-1').text
+        #shop = chromeDriver.find_element_by_id('tabular-buybox-truncate-1').text  #this is not working for me - i dont see this element
         try:
             chromeDriver.find_element_by_id("outOfStock")
             l.info("Item is outOfStock")
