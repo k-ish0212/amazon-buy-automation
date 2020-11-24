@@ -15,7 +15,8 @@ LOGIN_PASSWORD = os.environ.get('LOGIN_PASSWORD', None)
 ITEM_URL = os.environ.get('ITEM_URL', None)
 
 ACCEPT_SHOP = 'Amazon.com'
-LIMIT_VALUE = 550    # Maximum USD for the purchase
+#LIMIT_VALUE = 500    # Maximum USD for the purchase
+LIMIT_VALUE = os.environ.get('LIMIT_VALUE', None) # Let's add this to the .env file
 
 
 
