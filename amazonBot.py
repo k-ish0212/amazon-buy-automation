@@ -46,7 +46,7 @@ def purchase_item(chromeDriver):
     chromeDriver.find_element_by_id('buy-now-button').click()  # 1 click buy
     l.info("Placing order")
     ###chromeDriver.find_element_by_id('submitOrderButtonId-announce').click()
-    #chromeDriver.find_element_by_name('placeYourOrder1').click()
+    chromeDriver.find_element_by_name('placeYourOrder1').click()
     l.info("Successfully purchased item")
     os._exit(0)
 
