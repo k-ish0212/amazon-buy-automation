@@ -55,8 +55,7 @@ if __name__ == '__main__':
             try:
                 # Navigate to the item and buy if checks pass
                 amazonBot.purchase_item(b)
-                done = True
-                logger.info("Successfully purchased item")
+                #logger.info("Successfully purchased item")
             except BaseException:
                 pass
             except Exception as e:
