@@ -32,7 +32,7 @@ def purchase_item(chromeDriver):
     chromeDriver.get(ITEM_URL)
     # Checks if out of stock, verify_stock returns False if not in stock
     l.info("Checking stock")
-    if in_stock_check(chromeDriver): # removed not, as this was evaluating as true when item was not in stock
+    if not in_stock_check(chromeDriver): # removed not, as this was evaluating as true when item was not in stock
         return False
     # Checks price
     l.info("Checking price")
@@ -46,26 +46,22 @@ def purchase_item(chromeDriver):
     chromeDriver.find_element_by_id('buy-now-button').click()  # 1 click buy
     l.info("Placing order")
     ###chromeDriver.find_element_by_id('submitOrderButtonId-announce').click()
-    chromeDriver.find_element_by_name('placeYourOrder1').click()
+    #chromeDriver.find_element_by_name('placeYourOrder1').click()
     l.info("Successfully purchased item")
     os._exit(0)
 
 def in_stock_check(chromeDriver):
     inStock = False
     try:
-        #shop = chromeDriver.find_element_by_id('tabular-buybox-truncate-1').text  #this is not working for me - i dont see this element
-        try:
-            chromeDriver.find_element_by_id("outOfStock")
-            l.info("Item is outOfStock")
-            chromeDriver.refresh()
-        except NoSuchElementException as e:
-            try:
-                chromeDriver.find_element_by_id("tabular-buybox-text")
-                l.info("Item is in-stock!")
-                inStock = True
-            except NoSuchElementException as e:
-                time.sleep(1)
-                chromeDriver.refresh()
+        stock = chromeDriver.find_element_by_id('availability').text
+        availability = stock.find("In Stock")
+        if availability == -1:
+            l.info("Item is not in stock")
+            raise Exception("Item is not in stock")
+            return False
+        elif availability == 0:
+            l.info("Item is in stock!")
+            inStock = True
     finally:
         return inStock
 
