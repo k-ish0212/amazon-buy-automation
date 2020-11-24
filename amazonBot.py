@@ -30,16 +30,23 @@ def login(chromeDriver):
 def purchase_item(chromeDriver):
     chromeDriver.get(ITEM_URL)
     # Checks if out of stock, verify_stock returns False if not in stock
+    l.info("Checking stock")
     if in_stock_check(chromeDriver): # removed not, as this was evaluating as true when item was not in stock
         return False
     # Checks price
+    l.info("Checking price")
     if not verify_price_within_limit(chromeDriver):
         return False
     # Checks seller
-    verify_price_within_limit(chromeDriver)
-
+    l.info("Checking seller")
+    if not seller_check(chromeDriver):
+        return False
+    l.info("Clicking buy now")
     chromeDriver.find_element_by_id('buy-now-button').click()  # 1 click buy
-    chromeDriver.find_element_by_id('turbo-checkout-pyo-button').click()
+    l.info("Placing order")
+    chromeDriver.find_element_by_id('submitOrderButtonId-announce').click()
+    #chromeDriver.find_element_by_id('placeYourOrder1').click()
+    return True
 
 
 def in_stock_check(chromeDriver):
@@ -52,27 +59,37 @@ def in_stock_check(chromeDriver):
             chromeDriver.refresh()
         except NoSuchElementException as e:
             try:
-                chromeDriver.find_element_by_id("merchant-info")
+                chromeDriver.find_element_by_id("tabular-buybox-text")
                 l.info("Item is in-stock!")
                 inStock = True
             except NoSuchElementException as e:
                 time.sleep(1)
                 chromeDriver.refresh()
     finally:
+        l.info("Item is in-stock!")
         return inStock
 
 def seller_check(chromeDriver):
-    element = chromeDriver.find_element_by_id("merchant-info")
-    shop = element.text.find(ACCEPT_SHOP)
+    element = chromeDriver.find_element_by_id('tabular-buybox-truncate-1').text
+    l.info('element is: {}'.format(element))
+    shop = element.find(ACCEPT_SHOP)
+    l.info('shop is: {}'.format(shop))
     if shop == -1:
         raise Exception("Amazon is not the seller")
+        return False
     l.info("Successfully verified Seller")
+    return True
 
 def verify_price_within_limit(chromeDriver):
     price = chromeDriver.find_element_by_id('priceblock_ourprice').text
-    l.info('price of item is:  ', price)
-    if int(price.replace(' ', '').replace(',', '').replace('$', '')) > LIMIT_VALUE:
+    price = price.replace('$', '')
+    price = float(price)
+    # price = price.join()
+    l.info('price of item is:  {}'.format(price))
+    l.info('limit value is: {}'.format(float(LIMIT_VALUE)))
+    # int_price = int(price.replace(' ', '').replace(',', '').replace('$', ''))
+    # print(int_price)
+    if price > float(LIMIT_VALUE):
         l.warn('PRICE IS TOO LARGE.')
         return False
     return True
-
