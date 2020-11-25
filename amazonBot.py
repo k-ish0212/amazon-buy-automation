@@ -34,7 +34,7 @@ def validate_captcha(chromeDriver):
     l.info("Solving CAPTCHA")
     chromeDriver.get('https://www.amazon.com/errors/validateCaptcha')
     captcha = AmazonCaptcha.fromdriver(chromeDriver)
-    solution = captcha.solve(keep_logs=True)
+    solution = captcha.solve()
     chromeDriver.find_element_by_id('captchacharacters').send_keys(solution)
     chromeDriver.find_element_by_class_name('a-button-text').click()
     time.sleep(1)
