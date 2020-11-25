@@ -16,6 +16,11 @@ Requirements:
 
 Recommended to be run on Linux or Max. Would be a good script to run on a raspberry pi or server
 
+To do:
+--- 
+  * Make the Buy Now click and the Place Order click loop until they're successful - difficult to test
+  * I hit CAPTCHA's earlier today, and increased the limit manually for now (still testing), have not committed to repo
+
 Notes of caution: 
 --- 
 
