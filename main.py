@@ -53,6 +53,8 @@ if __name__ == '__main__':
         done = False
         while(not done):
             try:
+                # Solve Captcha
+                amazonBot.validate_captcha(b)
                 # Navigate to the item and buy if checks pass
                 amazonBot.purchase_item(b)
                 #logger.info("Successfully purchased item")
