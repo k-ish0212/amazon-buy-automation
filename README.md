@@ -5,8 +5,11 @@
 Example: script to buy items on Amazon (Please do not use this script for scalping, this is simply a free open source solution for those that want a console but are unable to get one due to market competitiveness)
 
 
+forked from yosh1/amazon-automation & druyang/amazon-PS5-automation
 
-forked from yosh1/amazon-automation
+Updates: 
+--- 
+  * Solves for CAPTCHA
 
 Requirements: 
 --- 
@@ -19,7 +22,6 @@ Recommended to be run on Linux or Max. Would be a good script to run on a raspbe
 To do:
 --- 
   * Make the Buy Now click and the Place Order click loop until they're successful - difficult to test
-  * I hit CAPTCHA's earlier today, and increased the limit manually for now (still testing), have not committed to repo
 
 Notes of caution: 
 --- 
@@ -28,7 +30,7 @@ Things to check for on Amazon/potential edge cases:
 
  * Amazon 2FA (an option is to disable but this will **expose your account to security problems**)
  * Currently uses 1 click buy. Confirm your default address + payments is correct before running this script
- * Captchas for hitting Amazon's server a lot
+ 
 
 ---
 
@@ -41,7 +43,7 @@ $ cp .env.sample .env
 ## Run
 
 ```
-$ pip install -r requirements.txt 
+$ pip install -r requirements.txt
 $ python3 main.py
 ```
 
