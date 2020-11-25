@@ -30,10 +30,14 @@ def login(chromeDriver):
     l.info("Successfully logged in")
 
 def validate_captcha(chromeDriver):
+    time.sleep(1)
     l.info("Solving CAPTCHA")
     chromeDriver.get('https://www.amazon.com/errors/validateCaptcha')
     captcha = AmazonCaptcha.fromdriver(chromeDriver)
-    solution = captcha.solve()
+    solution = captcha.solve(keep_logs=True)
+    chromeDriver.find_element_by_id('captchacharacters').send_keys(solution)
+    chromeDriver.find_element_by_class_name('a-button-text').click()
+    time.sleep(1)
 
 def purchase_item(chromeDriver):
     chromeDriver.get(ITEM_URL)
