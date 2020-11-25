@@ -28,7 +28,7 @@ Notes of caution:
 
 Things to check for on Amazon/potential edge cases: 
 
- * Amazon 2FA (an option is to disable but this will **expose your account to security problems**)
+ * Currently Amazon 2FA needs to be disabled on your account (this will **expose your account to security problems**)
  * Currently uses 1 click buy. Confirm your default address + payments is correct before running this script
  
 
