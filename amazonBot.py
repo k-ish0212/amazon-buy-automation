@@ -4,6 +4,7 @@ from os.path import join, dirname
 from logger import logger as l
 from selenium.common.exceptions import *
 from dotenv import load_dotenv
+from amazoncaptcha import AmazonCaptcha
 
 load_dotenv(verbose=True)
 dotenv_path = join(dirname(__file__), '.env')
@@ -28,6 +29,12 @@ def login(chromeDriver):
     chromeDriver.find_element_by_id('signInSubmit').click()
     l.info("Successfully logged in")
 
+def validate_captcha(chromeDriver):
+    l.info("Solving CAPTCHA")
+    chromeDriver.get('https://www.amazon.com/errors/validateCaptcha')
+    captcha = AmazonCaptcha.fromdriver(chromeDriver)
+    solution = captcha.solve()
+
 def purchase_item(chromeDriver):
     chromeDriver.get(ITEM_URL)
     # Checks if out of stock, verify_stock returns False if not in stock
@@ -43,10 +50,21 @@ def purchase_item(chromeDriver):
     if not seller_check(chromeDriver):
         return False
     l.info("Clicking buy now")
-    chromeDriver.find_element_by_id('buy-now-button').click()  # 1 click buy
+    chromeDriver.find_element_by_id('buy-now-button').click()
+    # clickbuynow = chromeDriver.find_element_by_id('buy-now-button')
+    # while clickbuynow.is_displayed():
+    #     clickbuynow.click() # 1 click buy
+    #     chromeDriver.refresh()
+    #     time.sleep(10)
+    #     clickbuynow = chromeDriver.find_element_by_id('buy-now-button')
+      
     l.info("Placing order")
-    ###chromeDriver.find_element_by_id('submitOrderButtonId-announce').click()
     chromeDriver.find_element_by_name('placeYourOrder1').click()
+    # while true:        
+    #     try:
+    #         chromeDriver.find_element_by_name('placeYourOrder1').click()
+    #     except NoSuchElementException:
+    #         break
     l.info("Successfully purchased item")
     os._exit(0)
 
