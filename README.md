@@ -1,8 +1,6 @@
 # Amazon Purchase Script 
 
 # Use at your own risk. Read thoroughly
-# Use at your own risk.
-# Use at your own risk.
 
 This is a Python script that checks if an item is in stock, shipped by Amazon, and under a certain price limit. The script will then purchase the item with limited captcha solving abilities. 
 
@@ -31,7 +29,7 @@ Requirements:
 * Python modules in `requirements.txt` 
 * [WebDriver for Chrome](https://sites.google.com/a/chromium.org/chromedriver/downloads) in same directory 
 
-Recommended to be run on Linux or Max. Would be a good script to run on a raspberry pi or server
+This would be a good script to run headless on a raspberry pi or server
 
 --- 
 
@@ -58,7 +56,7 @@ Sample Log:
     [26/Nov/2020 19:37:39] INFO - price of item is:  $39.99
     [26/Nov/2020 19:37:39] INFO - Checking shipper...
     [26/Nov/2020 19:37:39] INFO - Successfully verified shipper as: Amazon
-    [26/Nov/2020 19:37:39] INFO - Logging in as ayang25@gmail.com
+    [26/Nov/2020 19:37:39] INFO - Logging in as a@gmail.com
     [26/Nov/2020 19:37:41] INFO - Checking out...
     [26/Nov/2020 19:37:57] INFO - Placed order!
     [26/Nov/2020 19:37:57] INFO - Successfully purchased item
