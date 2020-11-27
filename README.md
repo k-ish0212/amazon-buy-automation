@@ -1,10 +1,24 @@
 # Amazon Purchase Script 
 
-**Use at your own risk. Read thoroughly**
+# Use at your own risk. Read thoroughly
+# Use at your own risk.
+# Use at your own risk.
+
+This is a Python script that checks if an item is in stock, shipped by Amazon, and under a certain price limit. The script will then purchase the item with limited captcha solving abilities. 
 
 Example: script to buy a PS5 on Amazon (Please do not use this script for scalping, this is simply a free open source solution for those that want a console but are unable to get one due to market competitiveness)
 
 forked from yosh1/amazon-automation
+
+
+Notes of caution: 
+--- 
+
+Things to check for on Amazon/potential edge cases: 
+
+ * Amazon 2FA (an option is to disable but this will **expose your account to security problems**)
+ * 1 Click buy sometimes does not work. Sometimes it does. 
+ * **Behavior is dependent on your default shipping address and payment method. Use at your own risk**
 
 Development: 
 --- 
@@ -18,16 +32,6 @@ Requirements:
 * [WebDriver for Chrome](https://sites.google.com/a/chromium.org/chromedriver/downloads) in same directory 
 
 Recommended to be run on Linux or Max. Would be a good script to run on a raspberry pi or server
-
-Notes of caution: 
---- 
-
-Things to check for on Amazon/potential edge cases: 
-
- * Amazon 2FA (an option is to disable but this will **expose your account to security problems**)
- * ~~Currently uses 1 click buy. Confirm your default address + payments is correct before running this script~~
- * 1 Click buy sometimes did not work for me, so I used the "Add to cart method". I left the 1-click-buy-method in if you want to use that instead.
- * Captchas for hitting Amazon's server a lot
 
 --- 
 
@@ -86,4 +90,9 @@ Alternatively use Docker:
 $ docker-compose build
 $ docker-compose up -d
 ```
+
+License 
+--- 
+Under MIT License.
+Use at your own risk. 
 
