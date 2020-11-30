@@ -2,12 +2,16 @@ import os
 import time
 from random import randint
 
+from dotenv import load_dotenv
 from logger import logger as l
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from amazoncaptcha import AmazonCaptcha
 
+load_dotenv(verbose=True)
+dotenv_path = '.env'
+load_dotenv(dotenv_path)
 
 LOGIN_MAIL = os.environ.get('LOGIN_MAIL', "")
 LOGIN_PASSWORD = os.environ.get('LOGIN_PASSWORD', "")

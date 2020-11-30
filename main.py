@@ -1,15 +1,10 @@
 # coding: utf-8
 
-from dotenv import load_dotenv
 from logger import logger
 from selenium import webdriver
 from selenium.webdriver import DesiredCapabilities
 
 import amazonBot
-
-load_dotenv(verbose=True)
-dotenv_path = '.env'
-load_dotenv(dotenv_path)
 
 
 def launch():
