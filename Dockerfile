@@ -1,5 +1,6 @@
 FROM python:3.8-alpine3.11
 
+RUN apk add zlib-dev jpeg-dev gcc musl-dev
 RUN apk add -U chromium chromium-chromedriver
 
 ARG project_dir=/python/app/
