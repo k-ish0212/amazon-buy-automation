@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 from random import randint
 
@@ -16,12 +17,20 @@ load_dotenv(dotenv_path)
 LOGIN_MAIL = os.environ.get('LOGIN_MAIL', "")
 LOGIN_PASSWORD = os.environ.get('LOGIN_PASSWORD', "")
 
-ITEM_URL = os.environ.get('ITEM_URL', "https://smile.amazon.com/PlayStation-5-Console/dp/B08FC5L3RG")
+ITEM_URL = os.environ.get('ITEM_URL', "")
 
 CHECKOUT_URL = "https://www.amazon.com/gp/cart/view.html?ref_=nav_cart"
 ACCEPT_SHOP = "amazon"
-LIMIT_VALUE = 500.  # Maximum USD for the purchase
+LIMIT_VALUE = int(os.environ.get('LIMIT_VALUE', "")) # Maximum USD for the purchase
 
+# class GracefulKiller:
+#   kill_now = False
+#   def __init__(self):
+#     signal.signal(signal.SIGINT, self.exit_gracefully)
+#     signal.signal(signal.SIGTERM, self.exit_gracefully)
+
+#   def exit_gracefully(self, *args):
+#     self.kill_now = True
 
 def login(chromeDriver):
     chromeDriver.find_element_by_id("nav-link-accountList").click()
@@ -49,7 +58,9 @@ def purchase_item(chromeDriver):
     while not in_stock_check(chromeDriver) or not verify_price_within_limit(chromeDriver) or not seller_check(
             chromeDriver):
         l.info("Could not purchase desired item...waiting for stock/pricing/seller")
-        time.sleep(randint(15, 90))
+        sleep = randint(15, 90)
+        l.info(f"Sleeping for {sleep} seconds...")
+        time.sleep(sleep)
         chromeDriver.refresh()
 
     # Logs in and purchases the item
@@ -105,7 +116,7 @@ def verify_price_within_limit(chromeDriver):
         l.error('Error verifying price: {}'.format(e))
         return False
 
-    l.info(f'price of item is:  {price}')
+    l.info(f'price of item is: {price}')
     l.info('limit value is: {}'.format(float(LIMIT_VALUE)))
 
     if float(price.replace('$', '')) > LIMIT_VALUE:

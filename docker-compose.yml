@@ -1,0 +1,13 @@
+---
+
+version: '3.4'
+
+services:
+  amz-buy-test:
+    container_name: amz-buy-test
+    build: .
+    restart: on-failure:10
+    environment:
+      ITEM_URL: "https://www.amazon.com/gp/product/B082PSKRSP/"
+      LIMIT_VALUE: 8
+
